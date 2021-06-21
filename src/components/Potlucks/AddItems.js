@@ -34,3 +34,5 @@ const handleSubmit = (e) => {
     </div>
     )
 }
+
+export default AddItems;

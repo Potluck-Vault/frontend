@@ -1,13 +1,8 @@
-import React from 'react'
-
-
 //Add a form that creates a new potluck and posts it to a backend endpoint
-
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
-
+import AddItems from './AddItems';
 
 import axios from 'axios';
 
@@ -31,17 +26,6 @@ const AddPotluck = (props) => {
         items: items
 	});
 
-
-	// useEffect(()=>{
-    //     axios.get(`http://localhost:5000/api/movies/${id}`)
-    //         .then(res=>{
-    //             setMovie(res.data);
-    //         })
-    //         .catch(err=>{
-    //             console.log(err.response);
-    //         })
-    // }, [id]);
-
 	
 	const handleChange = (e) => {
         setPotluck({
@@ -52,14 +36,14 @@ const AddPotluck = (props) => {
 
     const handleSubmit = (e) => {
 		e.preventDefault();
-		axios.post(`http://addPotluckAPI/`, potlucks)
-		.then(res=> {
-            setPotlucks(res.data);
-		  push(`/`);
-		})
-		.catch(err=> {
-		  console.log(err);
-		})
+		// axios.post(`http://addPotluckAPI/`, potlucks)
+		// .then(res=> {
+        //     setPotlucks(res.data);
+		//   push(`/`);
+		// })
+		// .catch(err=> {
+		//   console.log(err);
+		// })
         
 	}
 	
@@ -87,7 +71,7 @@ const AddPotluck = (props) => {
 					</div>
 					<div className="form-group">
 						<label>Location</label>
-						<input value={metascore} onChange={handleChange} name="location" type="text" className="form-control"/>
+						<input value={location} onChange={handleChange} name="location" type="text" className="form-control"/>
 					</div>		
 					<div className="form-group">
 						<label>Description</label>
@@ -104,4 +88,4 @@ const AddPotluck = (props) => {
 	</div>);
 }
 
-export default addPotluck;
+export default AddPotluck;

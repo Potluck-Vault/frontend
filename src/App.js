@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Home from './components/Home'
 import Login from './components/User/Login'
 import Register from './components/User/Register'
+import AddPotluck from './components/Potlucks/AddPotluck'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path='/register'  component={Register}/>
         <Route path='/login'  component={Login}/>
         <Route path='/' component={Home} />
+        <Route path='/addpotluck' component={AddPotluck} />
       </Switch>
     </Router>
   );
