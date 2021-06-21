@@ -12,9 +12,9 @@ const AddPotluck = (props) => {
 
     const [items, setItems] = useState([{
         id: uuidv4(),
-		item:"Dish Number One",
+		description:"Dish Number One",
 		claimed: false,
-		claimedBy: ""}]);
+		claimedBy: 0}]);
 
 	const [potluck, setPotluck] = useState({
         id: uuidv4(),

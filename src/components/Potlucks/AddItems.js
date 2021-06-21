@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {v4 as uuidv4} from 'uuid';
 
 const AddItems = (props) => {
@@ -11,25 +11,27 @@ const AddItems = (props) => {
         })
     };
 
-const handleSubmit = (e) => {
-    e.preventDefault();
-    setItems(items.push({id: uuidv4(),
-        item: "New Item", 
-        claimed: false, 
-        claimedBy: ""}))
-};
-
+    const handleItemSubmit = (e) => {
+        e.preventDefault();
+        setItems(items.push({id: uuidv4(),
+            description: "New Item", 
+            claimed: false, 
+            claimedBy: 0}))
+    };
+    console.log("items: ", items);
     return (
     <div>
         <h4>Menu Items</h4>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleItemSubmit}>
             {items.map(item=>{
-            <div>	
-                <label>Description</label>
-                <input value={item.item} onChange={handleChange} name="title" type="text" />			
+            <div>
+                    <label htmlFor="{id}">Description: </label>
+                    <input value={item.description} onChange={handleChange} name="{id}" type="text" />	
             </div>
-            })};
-            <button>Add another...</button>
+            })}
+            <div>
+                <button>Add another...</button>
+            </div>
         </form>
     </div>
     )
