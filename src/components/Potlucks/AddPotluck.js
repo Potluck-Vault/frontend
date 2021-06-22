@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
 import AddItems from './AddItems';
+import InviteGuests from './InviteGuests';
 
 import axios from 'axios';
 
@@ -11,6 +12,7 @@ const AddPotluck = (props) => {
 	const { setPotlucks, potlucks } = props; //Coming in from Home page
 
     const [items, setItems] = useState([]);
+	const [guests, setGuests] = useState([]);
 
 	const [potluck, setPotluck] = useState({
         id: uuidv4(),
@@ -74,7 +76,8 @@ const AddPotluck = (props) => {
 						<label>Description</label>
 						<textarea value={description} onChange={handleChange} name="description" className="form-control"></textarea>
 					</div>
-					<AddItems items={items} setItems={setItems}/>			
+					<AddItems items={items} setItems={setItems} />
+                    <InviteGuests guests={guests} setGuests={setGuests}	/>	
 				</div>
 				<div className="modal-footer">			    
 					<input type="submit" className="btn btn-info" value="Save Potluck"/>
