@@ -8,13 +8,9 @@ import axios from 'axios';
 
 const AddPotluck = (props) => {
 	const { push } = useHistory();
-	const { setPotlucks } = props; //Coming in from Home page
+	const { setPotlucks, potlucks } = props; //Coming in from Home page
 
-    const [items, setItems] = useState([{
-        id: uuidv4(),
-		description:"Dish Number One",
-		claimed: false,
-		claimedBy: 0}]);
+    const [items, setItems] = useState([]);
 
 	const [potluck, setPotluck] = useState({
         id: uuidv4(),
@@ -39,11 +35,12 @@ const AddPotluck = (props) => {
 		// axios.post(`http://addPotluckAPI/`, potlucks)
 		// .then(res=> {
         //     setPotlucks(res.data);
-		//   push(`/`);
+		  push(`/`);
 		// })
 		// .catch(err=> {
 		//   console.log(err);
 		// })
+        setPotlucks([...potlucks, potluck ])
         
 	}
 	
@@ -80,7 +77,7 @@ const AddPotluck = (props) => {
 					<AddItems items={items} setItems={setItems}/>			
 				</div>
 				<div className="modal-footer">			    
-					<input type="submit" className="btn btn-info" value="Save"/>
+					<input type="submit" className="btn btn-info" value="Save Potluck"/>
 					<Link to={`/`}><input type="button" className="btn btn-default" value="Cancel"/></Link>
 				</div>
 			</form>
