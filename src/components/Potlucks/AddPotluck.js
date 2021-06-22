@@ -21,7 +21,8 @@ const AddPotluck = (props) => {
 		time: "",
 		location: "",
 		description: "",
-        items: items
+        items: items,
+        guests: guests
 	});
 
 	
@@ -34,7 +35,7 @@ const AddPotluck = (props) => {
 
     const handleSubmit = (e) => {
 		e.preventDefault();
-		// axios.post(`http://addPotluckAPI/`, potlucks)
+		// axios.post(`http://addPotluckAPI/`, potluck)
 		// .then(res=> {
         //     setPotlucks(res.data);
 		//   push(`/`);
@@ -76,8 +77,14 @@ const AddPotluck = (props) => {
 						<label>Description</label>
 						<textarea value={description} onChange={handleChange} name="description" className="form-control"></textarea>
 					</div>
-					<AddItems items={items} setItems={setItems} />
-                    <InviteGuests guests={guests} setGuests={setGuests}	/>	
+					<AddItems items={items} 
+                        setItems={setItems} 
+                        potluck={potluck} 
+                        setPotluck={setPotluck} />
+                    <InviteGuests guests={guests} 
+                        setGuests={setGuests} 
+                        potluck={potluck} 
+                        setPotluck={setPotluck}/>	
 				</div>
 				<div className="modal-footer">			    
 					<input type="submit" className="btn btn-info" value="Save Potluck"/>

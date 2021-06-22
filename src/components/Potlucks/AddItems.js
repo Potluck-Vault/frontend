@@ -3,13 +3,19 @@ import {v4 as uuidv4} from 'uuid';
 
 
 const AddItems = (props) => {
-    const { items, setItems } = props;
+    const { items, setItems, potluck, setPotluck } = props;
     const [newItem, setNewItem] = useState({id: uuidv4(), description: "", claimed: false, claimedBy: 0});
 
     const handleItemSubmit = (e) => {
         e.preventDefault();
         setItems([...items, {id: newItem.id, description: newItem.description, claimed: false, claimedBy: 0}])
+        updatePotluck(items);
         setNewItem({id: uuidv4(), description: "", claimed: false, claimedBy: 0});
+        console.log("Potluck after new item: ", potluck);
+    };
+
+    const updatePotluck = (items) => {
+        setPotluck({...potluck, items: items});
     };
 
     const handleNewItemChange = (e) => {

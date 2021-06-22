@@ -3,14 +3,20 @@ import {v4 as uuidv4} from 'uuid';
 
 
 const InviteGuests = (props) => {
-    const { guests, setGuests } = props;
+    const { guests, setGuests, potluck, setPotluck } = props;
     const [newGuest, setNewGuest] = useState({id: uuidv4(), name: "", email: ""});
 
     const handleGuestSubmit = (e) => {
         e.preventDefault();
         setGuests([...guests, {id: newGuest.id, name: newGuest.name, email: newGuest.email}])
+        updatePotluck(guests);
         setNewGuest({id: uuidv4(), name: "", email: ""});
+        console.log("Potluck after new guest: ", potluck);
     };
+
+    const updatePotluck = () => {
+        setPotluck({...potluck, guests: guests});       
+    }
 
     const handleNewGuestChange = (e) => {
         setNewGuest({
