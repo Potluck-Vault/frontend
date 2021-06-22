@@ -32,7 +32,7 @@ const InviteGuests = (props) => {
     return (
     <div>
         <h4>Guests</h4>
-            {guests.map(guest => <p>{guest.name} <button name={guest.id} onClick={deleteGuest}>X</button></p>
+            {guests.map(guest => <p>{guest.name} <button type="button" name={guest.id} onClick={deleteGuest}>X</button></p>
              )}
 
         <h4>Invite a Guest</h4>
