@@ -9,28 +9,29 @@ import axios from 'axios';
 
 const AddPotluck = (props) => {
 	const { push } = useHistory();
-	const { setPotlucks, potlucks } = props; //Coming in from Home page
+	const { setPotlucks, potlucks, potluck, setPotluck, items, setItems, guests, setGuests } = props; //Coming in from Home page
 
-    const [items, setItems] = useState([]);
-	const [guests, setGuests] = useState([]);
+//I think these will have to be moved to Home and brought in thru props.
+	// const [items, setItems] = useState([]);
+	// const [guests, setGuests] = useState([]);
 
-	const [potluck, setPotluck] = useState({
-        id: uuidv4(),
-		title:"",
-		date: "",
-		time: "",
-		location: "",
-		description: "",
-        items: items,
-        guests: guests
-	});
+	// const [potluck, setPotluck] = useState({
+    //     id: uuidv4(),
+	// 	title:"",
+	// 	date: "",
+	// 	time: "",
+	// 	location: "",
+	// 	description: "",
+    //     items: items,
+    //     guests: guests
+	// });
 
 	
 	const handleChange = (e) => {
-        setPotluck({
-            ...potluck,
-            [e.target.name]: e.target.value
-        });
+		setPotluck({
+			...potluck,
+			[e.target.name]: e.target.value
+		});
     }
 
     const handleSubmit = (e) => {

@@ -5,6 +5,7 @@ import {v4 as uuidv4} from 'uuid';
 const AddItems = (props) => {
     const { items, setItems, potluck, setPotluck } = props;
     const [newItem, setNewItem] = useState({id: uuidv4(), description: "", claimed: false, claimedBy: ""});
+    // const updateItem = {id: "", description: "", claimed: false, claimedBy: ""}
 
     const handleItemSubmit = (e) => {
         e.preventDefault();
@@ -13,8 +14,8 @@ const AddItems = (props) => {
         setNewItem({id: uuidv4(), description: "", claimed: false, claimedBy: ""});
     };
 
-    const updatePotluck = (items) => {
-        setPotluck({...potluck, items: items});
+    const updatePotluck = (newItems) => {
+        setPotluck({...potluck, items: newItems});
         console.log("Potluck after new item: ", potluck);
     };
 
@@ -29,12 +30,17 @@ const AddItems = (props) => {
     const deleteItem = (e) => {
         setItems(items.filter(item => item.id !== e.target.name));
     }
+    const editItem = (e) => {
+        const updateItem = {id: e.target.name.id, description: e.target.name.description, claimed: e.target.name.claimed, claimedBy: e.target.name.claimedBy};
+        setNewItem({...newItem, description: e.target.name});
+        setItems(items.filter(item => item.description !== e.target.name));
+    }
+
 
     return (
     <div>
         <h4>Menu Items</h4>
-            {items.map(item => <p>{item.description} <button type="button" name={item.id} color="red" onClick={deleteItem}>X</button></p>)}
-
+            {items.map(item => <p>{item.description} <button type="button" name={item.description} onClick={deleteItem}>X</button><button type="button" name={item.description} onClick={editItem}>Edit</button> </p>)}
         <h4>Add an Item</h4>
             <div>
                 <label htmlFor="description">Description: </label>
