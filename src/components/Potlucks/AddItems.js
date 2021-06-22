@@ -21,9 +21,7 @@ const AddItems = (props) => {
     };
 
     const deleteItem = (e) => {
-        console.log("e.target.name before filter: ", e.target.name);
         setItems(items.filter(item => item.id !== e.target.name));
-        // console.log("items after filter: ", items);
     }
 
     return (

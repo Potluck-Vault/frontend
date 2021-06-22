@@ -35,12 +35,12 @@ const AddPotluck = (props) => {
 		// axios.post(`http://addPotluckAPI/`, potlucks)
 		// .then(res=> {
         //     setPotlucks(res.data);
-		  push(`/`);
+		//   push(`/`);
 		// })
 		// .catch(err=> {
 		//   console.log(err);
 		// })
-        setPotlucks([...potlucks, potluck ])
+        // setPotlucks([...potlucks, potluck ])
         
 	}
 	
