@@ -34,7 +34,7 @@ const InviteGuests = (props) => {
                 <label htmlFor="name">Name: </label>
                 <input value={newGuest.name} onChange={handleNewGuestChange} name="name" type="text" />	
                 <label htmlFor="name">Email: </label>
-                <input value={newGuest.email} onChange={handleNewGuestChange} name="email" type="text" />	
+                <input value={newGuest.email} onChange={handleNewGuestChange} name="email" type="email" />	
             </div>
             
             <div>
