@@ -8,8 +8,6 @@ import Home from './components/Home'
 import Login from './components/User/Login'
 import Register from './components/User/Register'
 import AddPotluck from './components/Potlucks/AddPotluck'
-import EditPotluck from './components/Potlucks/EditPotluck'
-
 
 function App() {
   const [potlucks, setPotlucks ] = useState([])
@@ -50,7 +48,7 @@ function App() {
         />
         <Route path='/editpotluck' 
               render={(props) => (
-                <EditPotluck {...props} potlucks={potlucks} 
+                <AddPotluck {...props} potlucks={potlucks} 
                             setPotlucks={setPotlucks}
                             potluck={potluck} 
                             setPotluck={setPotluck} 

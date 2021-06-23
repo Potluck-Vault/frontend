@@ -10,22 +10,6 @@ import axios from 'axios';
 const AddPotluck = (props) => {
 	const { push } = useHistory();
 	const { setPotlucks, potlucks, potluck, setPotluck, items, setItems, guests, setGuests } = props; //Coming in from Home page
-
-//I think these will have to be moved to Home and brought in thru props.
-	// const [items, setItems] = useState([]);
-	// const [guests, setGuests] = useState([]);
-
-	// const [potluck, setPotluck] = useState({
-    //     id: uuidv4(),
-	// 	title:"",
-	// 	date: "",
-	// 	time: "",
-	// 	location: "",
-	// 	description: "",
-    //     items: items,
-    //     guests: guests
-	// });
-
 	
 	const handleChange = (e) => {
 		setPotluck({
@@ -44,7 +28,8 @@ const AddPotluck = (props) => {
 		// .catch(err=> {
 		//   console.log(err);
 		// })
-        // setPotlucks([...potlucks, potluck ])
+		// console.log("AddPotluck submit: ", potluck);
+        setPotlucks([...potlucks, potluck ])
         
 	}
 	
@@ -55,7 +40,7 @@ const AddPotluck = (props) => {
 		<div className="modal-content">
 			<form onSubmit={handleSubmit}>
 				<div className="modal-header">						
-					<h4 className="modal-title">Adding: <strong>{potluck.title}</strong></h4>
+					<h4 className="modal-title">Updating: <strong>{potluck.title}</strong></h4>
 				</div>
 				<div className="modal-body">					
 					<div className="form-group">
