@@ -1,6 +1,6 @@
 //Add a form that creates a new potluck and posts it to a backend endpoint
 import React, { useState, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useParams } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
 import AddItems from './AddItems';
 import InviteGuests from './InviteGuests';
@@ -8,10 +8,30 @@ import InviteGuests from './InviteGuests';
 import axios from 'axios';
 
 const AddPotluck = (props) => {
+	// console.log("AddPotluck props.potluck: ", props.potluck);
+
 	const { push } = useHistory();
-	const { setPotlucks, potlucks, potluck, setPotluck, items, setItems, guests, setGuests } = props; //Coming in from Home page
-	
-	const handleChange = (e) => {
+	// const { setPotlucks, potlucks, potluck, setPotluck, items, setItems, guests, setGuests } = props; //Coming in from Home page
+	const [potluck, setPotluck] = useState([{name: "", date: "", time: "", location: "", description: "" }]);
+	const [items, setItems] = useState([]);
+	const [guests, setGuests] = useState([]);
+
+	//This is a comment
+	const { id } = useParams();
+
+	useEffect(()=>{
+		console.log("api endpoint: ", `https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`);
+        axios.get(`https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`)
+          .then(res => { console.log("res.data for potluck id api: ", res.data)
+            setPotluck(res.data);
+
+          })
+          .catch(err => {
+            console.log("Error from API: ", err);
+          });
+          
+      }, [id]);
+		const handleChange = (e) => {
 		setPotluck({
 			...potluck,
 			[e.target.name]: e.target.value
@@ -29,23 +49,26 @@ const AddPotluck = (props) => {
 		//   console.log(err);
 		// })
 		// console.log("AddPotluck submit: ", potluck);
-        setPotlucks([...potlucks, potluck ])
+	
+		// Keep state in synch with database 
+
+        // setPotlucks([...potlucks, potluck ])
         
 	}
-	
-	const { title, date, time, location, description } = potluck;
+
+	const { name, date, time, location, description } = potluck[0];
 
     return (
 	<div className="col">
 		<div className="modal-content">
 			<form onSubmit={handleSubmit}>
 				<div className="modal-header">						
-					<h4 className="modal-title">Updating: <strong>{potluck.title}</strong></h4>
+					<h4 className="modal-title">Updating: <strong>{name}</strong></h4>
 				</div>
 				<div className="modal-body">					
 					<div className="form-group">
 						<label>Title</label>
-						<input value={title} onChange={handleChange} name="title" type="text" className="form-control"/>
+						<input value={name} onChange={handleChange} name="name" type="text" className="form-control"/>
 					</div>
 					<div className="form-group">
 						<label>Date</label>
@@ -78,7 +101,7 @@ const AddPotluck = (props) => {
 				</div>
 			</form>
 		</div>
-	</div>);
-}
+	</div>
+	)};
 
 export default AddPotluck;
