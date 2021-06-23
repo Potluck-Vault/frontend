@@ -4,18 +4,20 @@ import {v4 as uuidv4} from 'uuid';
 
 const InviteGuests = (props) => {
     const { guests, setGuests, potluck, setPotluck } = props;
-    const [newGuest, setNewGuest] = useState({id: uuidv4(), name: "", email: ""});
+    const [newGuest, setNewGuest] = useState({id: uuidv4(), name: "", email: "", rsvp: false});
 
     const handleGuestSubmit = (e) => {
         e.preventDefault();
-        setGuests([...guests, {id: newGuest.id, name: newGuest.name, email: newGuest.email}])
+        setGuests([...guests, {id: newGuest.id, name: newGuest.name, email: newGuest.email, rsvp: newGuest.rsvp}]);
         updatePotluck(guests);
         setNewGuest({id: uuidv4(), name: "", email: ""});
-        console.log("Potluck after new guest: ", potluck);
+        // console.log("Potluck after new guest: ", potluck);
     };
 
     const updatePotluck = () => {
-        setPotluck({...potluck, guests: guests});       
+        setPotluck({...potluck, guests: [...guests, newGuest]});
+        // console.log("Potluck after new guest: ", potluck);
+       
     }
 
     const handleNewGuestChange = (e) => {
@@ -29,10 +31,19 @@ const InviteGuests = (props) => {
         setGuests(guests.filter(guest => guest.id !== e.target.name));
     }
 
+    const editGuest = (updateGuest) => {
+        setNewGuest({id: updateGuest.id, name: updateGuest.name, email: updateGuest.email, rsvp: updateGuest.resvp});
+        setGuests(guests.filter(guest => guest.id !== updateGuest.id));
+    }
+
     return (
     <div>
         <h4>Guests</h4>
-            {guests.map(guest => <p>{guest.name} <button type="button" name={guest.id} onClick={deleteGuest}>X</button></p>
+            {guests.map(guest => 
+            <div>
+                <p>{`${guest.name}, ${guest.email}`} <button type="button" name={guest.id} onClick={deleteGuest}>X</button><button type="button" name={guest.name} onClick={()=>{editGuest(guest)}}>Edit</button></p>
+                
+            </div>
              )}
 
         <h4>Invite a Guest</h4>
