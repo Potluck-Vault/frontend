@@ -9,6 +9,7 @@ import Home from './components/Home'
 import Login from './components/User/Login'
 import Register from './components/User/Register'
 import AddPotluck from './components/Potlucks/AddPotluck'
+import EditPotluck from './components/Potlucks/EditPotluck'
 import Rsvp from './components/User/Rsvp'
 
 function App() {
@@ -43,7 +44,7 @@ function App() {
           /> */}
 
         <Route path='/addpotluck'  component={AddPotluck}/>
-        <Route path='/editpotluck/:id'  component={AddPotluck}/>
+        <Route path='/editpotluck/:id'  component={EditPotluck}/>
         {/* <Route path='/addpotluck' 
           render={(props) => (
             <AddPotluck {...props} potlucks={potlucks} 
