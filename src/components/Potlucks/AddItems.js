@@ -13,9 +13,8 @@ const AddItems = (props) => {
         setNewItem({id: uuidv4(), item: "", claimed: false, claimedBy: ""});
     };
 
-    const updatePotluck = () => {
+    const updatePotluck = (items) => {
         setPotluck({...potluck, items: [...items, newItem]});
-        // console.log("Potluck after new item: ", potluck);
     };
 
     const handleNewItemChange = (e) => {
@@ -44,7 +43,6 @@ const AddItems = (props) => {
                 <label htmlFor="item">Description: </label>
                 <input value={newItem.item} onChange={handleNewItemChange} name="item" type="text" />	
             </div>
-            
             <div>
                 <button onClick={handleItemSubmit}>Add to list...</button>
             </div>
