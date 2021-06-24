@@ -81,11 +81,6 @@ const Rsvp = () =>{
         tempItems.push(newItem);
         // replace data.items completely with tempItems
         setData({...data, items: tempItems});
-
-        // console.log("newItem: ", newItem);
-        // console.log("data.items: ", data.items); 
-        // console.log("tempItems: ", tempItems);
-  
     }
 
     const handleSubmit = e =>{

@@ -15,7 +15,6 @@ const AddItems = (props) => {
 
     const updatePotluck = () => {
         setPotluck({...potluck, items: [...items, newItem]});
-        // console.log("Potluck after new item: ", potluck);
     };
 
     const handleNewItemChange = (e) => {
