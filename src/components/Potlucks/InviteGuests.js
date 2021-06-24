@@ -9,15 +9,12 @@ const InviteGuests = (props) => {
     const handleGuestSubmit = (e) => {
         e.preventDefault();
         setGuests([...guests, {id: newGuest.id, guest: newGuest.guest, contact: newGuest.contact, rsvp: newGuest.rsvp}]);
-        updatePotluck(guests);
+        updatePotluck(guests)
         setNewGuest({id: uuidv4(), guest: "", contact: ""});
-        // console.log("Potluck after new guest: ", potluck);
     };
 
-    const updatePotluck = () => {
-        setPotluck({...potluck, guests: [...guests, newGuest]});
-        // console.log("Potluck after new guest: ", potluck);
-       
+    const updatePotluck = (guests) => {
+        setPotluck({...potluck, guests: [...guests, newGuest]});       
     }
 
     const handleNewGuestChange = (e) => {

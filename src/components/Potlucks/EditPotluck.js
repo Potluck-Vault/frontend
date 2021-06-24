@@ -30,7 +30,6 @@ const EditPotluck = (props) => {
 
 
 	useEffect(()=>{
-		console.log("api endpoint: ", `https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`);
         axios.get(`https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`)
           .then(res => { console.log("res.data for potluck id api: ", res.data)
             setPotluck(res.data);

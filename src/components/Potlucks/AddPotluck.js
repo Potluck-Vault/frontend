@@ -14,14 +14,17 @@ const AddPotluck = (props) => {
 	// const { setPotlucks, potlucks, potluck, setPotluck, items, setItems, guests, setGuests } = props; //Coming in from Home page
 	const [items, setItems] = useState([]);
 	const [guests, setGuests] = useState([]);
-	const [potluck, setPotluck] = useState({id: uuidv4(),
-											name: "", 
-											date: "", 
-											time: "", 
-											location: "", 
-											description: "", 
-											guests: guests,
-											items: items });
+	const [potluck, setPotluck] = useState({
+		user_id: 1, //where does user_id  & username come from?
+		username: "",
+		name: "", 
+		date: "", 
+		time: "", 
+		location: "", 
+		description: "", 
+		image_url: "",
+		items: items,
+		guests: guests });
 
 
 
@@ -32,23 +35,47 @@ const AddPotluck = (props) => {
 			[e.target.name]: e.target.value
 		});
 	}
-
+	const removeIdFromGuests = guests => {
+		let newGuests = [];
+		guests.forEach(guest=>{
+			let newGuest = {guest: guest.guest, contact: guest.contact, rsvp: guest.rsvp};
+			newGuests.push(newGuest);
+		})
+		console.log("newGuests: ", newGuests)
+		setGuests(newGuests);
+		console.log("guests after setGuests: ", guests)
+		setPotluck({...potluck, guests: newGuests})
+		console.log("potluck after setPotluck: ", potluck);
+	}
+	const removeIdFromItems = items => {
+		let newItems = [];
+		items.forEach(item=>{
+			let newItem = {item: item.item, claimed: item.claimed, claimedBy: item.claimedBy};
+			newItems.push(newItem);
+		})
+		console.log("newItems: ", newItems)
+		setItems(newItems);
+		setPotluck({...potluck, items: newItems});
+	}
     const handleSubmit = (e) => {
 		e.preventDefault();
-		// axios.post(`http://addPotluckAPI/`, potluck)
-		// .then(res=> {
-        //     setPotlucks(res.data);
-		//   push(`/`);
-		// })
-		// .catch(err=> {
-		//   console.log(err);
-		// })
-		// console.log("AddPotluck submit: ", potluck);
-	
+		removeIdFromGuests(potluck.guests);
+		removeIdFromItems(potluck.items);
+		setPotluck({...potluck, items: items, guests: guests});
+        axios.post(`https://potluckvaultv2.herokuapp.com/api/potlucks/`, potluck)
+          .then(res => { console.log("res for potluck id api: ", res)
+            setPotluck(res.data);
+			setGuests(res.data.guests);
+			setItems(res.data.items);
+
+          })
+          .catch(err => {
+            console.log("Error from API: ", err);
+          });
 		// Keep state in synch with database 
 
         // setPotlucks([...potlucks, potluck ])
-        console.log("potlucks: ", potluck);
+        console.log("potluck to post: ", potluck);
 	}
 
 	const { name, date, time, location, description } = potluck;

@@ -13,7 +13,7 @@ const AddItems = (props) => {
         setNewItem({id: uuidv4(), item: "", claimed: false, claimedBy: ""});
     };
 
-    const updatePotluck = () => {
+    const updatePotluck = (items) => {
         setPotluck({...potluck, items: [...items, newItem]});
     };
 
