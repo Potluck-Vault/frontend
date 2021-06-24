@@ -45,7 +45,7 @@ const Home = () => {
           
       }, []);
     return (
-        <div>
+        <div className='potluck-container'>
             <h1>My Potlucks</h1>
             {potlucks.map(potluck => {
             return (

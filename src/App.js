@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import React, { useState } from 'react'
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
+import Header from './components/NavComponents/Header'
+import './css/App.css'
 
 //COMPONETNS
 import Home from './components/Home'
@@ -29,47 +31,50 @@ function App() {
 	// });
 
   return (
-    <Router>
-      <Switch>
-        <Route path='/register'  component={Register}/>
-        <Route path='/rsvp'  component={Rsvp}/>
-        <Route path='/login'  component={Login}/>
-        <Route exact path='/'  component={Home}/>
-        {/* <Route exact path='/'
-          render={(props) => (
-            <Home {...props} potlucks={potlucks} 
-                  setPotlucks={setPotlucks} />
-          )} 
-          /> */}
-
-        <Route path='/addpotluck'  component={AddPotluck}/>
-        <Route path='/editpotluck/:id'  component={AddPotluck}/>
-        {/* <Route path='/addpotluck' 
-          render={(props) => (
-            <AddPotluck {...props} potlucks={potlucks} 
-                        setPotlucks={setPotlucks}
-                        potluck={potluck} 
-                        setPotluck={setPotluck} 
-                        items={items} 
-                        setItems={setItems} 
-                        guests={guests}
-                        setGuests={setGuests}  />
-          )}
+    <div>
+      <Router>
+        <Header/>
+        <Switch>
+          <Route path='/register'  component={Register}/>
+          <Route path='/rsvp'  component={Rsvp}/>
+          <Route path='/login'  component={Login}/>
+          <Route exact path='/'  component={Home}/>
+          {/* <Route exact path='/'
+            render={(props) => (
+              <Home {...props} potlucks={potlucks} 
+                    setPotlucks={setPotlucks} />
+            )} 
             /> */}
-        {/* <Route path='/editpotluck' 
-          render={(props) => (
-            <AddPotluck {...props} potlucks={potlucks} 
-                        setPotlucks={setPotlucks}
-                        potluck={potluck} 
-                        setPotluck={setPotluck} 
-                        items={items} 
-                        setItems={setItems} 
-                        guests={guests}
-                        setGuests={setGuests}  />
-          )}
-        /> */}
-      </Switch>
-    </Router>
+
+          <Route path='/addpotluck'  component={AddPotluck}/>
+          <Route path='/editpotluck/:id'  component={AddPotluck}/>
+          {/* <Route path='/addpotluck' 
+            render={(props) => (
+              <AddPotluck {...props} potlucks={potlucks} 
+                          setPotlucks={setPotlucks}
+                          potluck={potluck} 
+                          setPotluck={setPotluck} 
+                          items={items} 
+                          setItems={setItems} 
+                          guests={guests}
+                          setGuests={setGuests}  />
+            )}
+              /> */}
+          {/* <Route path='/editpotluck' 
+            render={(props) => (
+              <AddPotluck {...props} potlucks={potlucks} 
+                          setPotlucks={setPotlucks}
+                          potluck={potluck} 
+                          setPotluck={setPotluck} 
+                          items={items} 
+                          setItems={setItems} 
+                          guests={guests}
+                          setGuests={setGuests}  />
+            )}
+          /> */}
+        </Switch>
+      </Router>
+    </div>
   );
 }
 
