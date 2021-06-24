@@ -43,7 +43,6 @@ const AddItems = (props) => {
                 <label htmlFor="item">Description: </label>
                 <input value={newItem.item} onChange={handleNewItemChange} name="item" type="text" />	
             </div>
-            
             <div>
                 <button onClick={handleItemSubmit}>Add to list...</button>
             </div>

@@ -16,13 +16,16 @@ const EditPotluck = (props) => {
 	const [items, setItems] = useState([]);
 	const [guests, setGuests] = useState([]);
 	const [potluck, setPotluck] = useState({id: id,
+											user_id: 1, //where does user_id  & username come from?
+											username: "",
 											name: "", 
 											date: "", 
 											time: "", 
 											location: "", 
 											description: "", 
-											guests: guests,
-											items: items });
+											image_url: "",
+											items: items,
+											guests: guests });
 
 
 
@@ -30,7 +33,9 @@ const EditPotluck = (props) => {
 		console.log("api endpoint: ", `https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`);
         axios.get(`https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`)
           .then(res => { console.log("res.data for potluck id api: ", res.data)
-            setPotluck(res.data[0]);
+            setPotluck(res.data);
+			setGuests(res.data.guests);
+			setItems(res.data.items);
 
           })
           .catch(err => {
@@ -48,23 +53,19 @@ const EditPotluck = (props) => {
 
     const handleSubmit = (e) => {
 		e.preventDefault();
-		// axios.put(`http://editPotluckAPI/`, potluck)
-		// .then(res=> {
-        //     setPotlucks(res.data);
-		//   push(`/`);
-		// })
-		// .catch(err=> {
-		//   console.log(err);
-		// })
-		// console.log("AddPotluck submit: ", potluck);
-	
-		// Keep state in synch with database 
-
+		axios.put((`https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`), potluck)
+		.then(res=> {console.log("Response from put: ", res);
+            // setPotlucks(res.data);
+		})
+		.catch(err=> {
+		  console.log(err);
+		})
+		console.log("AddPotluck submit: ", potluck);	
         // setPotlucks([...potlucks, potluck ])
 	}
 
 	const { name, date, time, location, description } = potluck;
-
+	console.log("Potluck: ", potluck);
     return (
 	<div className="col">
 		<div className="modal-content">

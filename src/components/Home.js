@@ -13,7 +13,9 @@ const Home = () => {
   
     const [potluck, setPotluck] = useState({
         id: uuidv4(),
-        title:"",
+        user_id: "",
+        username: "",
+        name:"",
         date: "",
         time: "",
         location: "",
@@ -21,6 +23,10 @@ const Home = () => {
         items: [],
         guests: []
     });
+
+    const getItemGuest = (id) => {
+        return potluck.guests.filter(guest => guest.id == id);
+    }
 
    useEffect(()=>{
         axios.get('https://potluckvaultv2.herokuapp.com/api/potlucks')
@@ -41,16 +47,7 @@ const Home = () => {
             return (
             <div className="potluck-card">
                 <h2>{potluck.name}</h2>
-                {/* Link with onClick and component */}
-                {/* <Link to={'/editpotluck'} component={<AddPotluck />} onClick={()=>{editPotluck(potluck)}}>Edit</Link> */}
 
-                {/* Link with component; no onClick */}
-                {/* <Link to={'/editpotluck'} component={AddPotluck}>Edit</Link> */}
-
-                {/* Button with onClick */}
-                {/* <button onClick={()=>{editPotluck(potluck)}}>Edit</button> */}
-
-                {/* Link with id in url */}
                 <Link to={`/editpotluck/${potluck.id}`}>Edit</Link>
 
                 <p>Date : {potluck.date}</p>
@@ -64,13 +61,15 @@ const Home = () => {
                             <div>
                                 <p>{item.item}</p> 
                                 <p>Claimed?: {item.claimed}</p>
-                                <p>By: {item.claimedBy}</p>
+                                <p>ClaimedBy: {item.claimedBy}</p>
+                                {/* <p>By: {getItemGuest(item.claimedBy)[0].guest}</p> */}
                             </div>
                     )})}
                     <h3>Guests</h3>
                     {potluck.guests.map(guest => {
                         return(
                             <div className="guest">
+                                <p>{guest.id}</p> 
                                 <p>{guest.guest}</p>
                                 <p>{guest.contact}</p>
                             </div>

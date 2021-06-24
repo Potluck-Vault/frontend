@@ -8,9 +8,9 @@ const InviteGuests = (props) => {
 
     const handleGuestSubmit = (e) => {
         e.preventDefault();
-        setGuests([...guests, {id: newGuest.id, name: newGuest.name, email: newGuest.email, rsvp: newGuest.rsvp}]);
+        setGuests([...guests, {id: newGuest.id, guest: newGuest.guest, contact: newGuest.contact, rsvp: newGuest.rsvp}]);
         updatePotluck(guests);
-        setNewGuest({id: uuidv4(), name: "", email: ""});
+        setNewGuest({id: uuidv4(), guest: "", contact: ""});
         // console.log("Potluck after new guest: ", potluck);
     };
 
@@ -32,7 +32,7 @@ const InviteGuests = (props) => {
     }
 
     const editGuest = (updateGuest) => {
-        setNewGuest({id: updateGuest.id, name: updateGuest.name, email: updateGuest.email, rsvp: updateGuest.resvp});
+        setNewGuest({id: updateGuest.id, guest: updateGuest.guest, contact: updateGuest.contact, rsvp: updateGuest.rsvp});
         setGuests(guests.filter(guest => guest.id !== updateGuest.id));
     }
 
@@ -41,7 +41,7 @@ const InviteGuests = (props) => {
         <h4>Guests</h4>
             {guests.map(guest => 
             <div>
-                <p>{`${guest.name}, ${guest.email}`} <button type="button" name={guest.id} onClick={deleteGuest}>X</button><button type="button" name={guest.name} onClick={()=>{editGuest(guest)}}>Edit</button></p>
+                <p>{`${guest.guest}, ${guest.contact}`} <button type="button" name={guest.id} onClick={deleteGuest}>X</button><button type="button" name={guest.guest} onClick={()=>{editGuest(guest)}}>Edit</button></p>
                 
             </div>
              )}
@@ -49,9 +49,9 @@ const InviteGuests = (props) => {
         <h4>Invite a Guest</h4>
             <div>
                 <label htmlFor="name">Name: </label>
-                <input value={newGuest.name} onChange={handleNewGuestChange} name="name" type="text" />	
+                <input value={newGuest.guest} onChange={handleNewGuestChange} name="guest" type="text" />	
                 <label htmlFor="name">Email: </label>
-                <input value={newGuest.email} onChange={handleNewGuestChange} name="email" type="email" />	
+                <input value={newGuest.contact} onChange={handleNewGuestChange} name="contact" type="email" />	
             </div>
             
             <div>
