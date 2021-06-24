@@ -40,6 +40,7 @@ const initialFormValue = {
     rsvp:null,
     id: v4()
 } 
+
 const stringToBool= value =>{
     if (value && typeof value === "string") {
         if (value.toLowerCase() === "true") return true;
@@ -53,7 +54,8 @@ const Rsvp = () =>{
     const [formValue,setFormValue] = useState(initialFormValue)
     const [isComing,setIsComing] = useState(false)
     const {push} = useHistory()
-    
+    // const [tempItems, setTempItems] = useState([]);
+
     //Use Effect to get data from the DB
 
     const handleOnChange = (e) =>{
@@ -68,6 +70,22 @@ const Rsvp = () =>{
         const valueToUse = type === 'checkbox' ? checked : value
         setData({...data,[name]:valueToUse})
         console.log(name,valueToUse)
+    }
+
+    const handleItemChange = (updateItem) => {
+        // Create newItem (copy of changed item) with checkbox = !checkbox
+        const newItem = {id: updateItem.id, description: updateItem.description, claimed: !updateItem.claimed, claimedBy:updateItem.claimedBy};
+        // Remove old item from tempItems
+        let tempItems = data.items.filter(item => item.id !== updateItem.id);
+        // Add newItem to tempItems
+        tempItems.push(newItem);
+        // replace data.items completely with tempItems
+        setData({...data, items: tempItems});
+
+        // console.log("newItem: ", newItem);
+        // console.log("data.items: ", data.items); 
+        // console.log("tempItems: ", tempItems);
+  
     }
 
     const handleSubmit = e =>{
@@ -126,7 +144,7 @@ const Rsvp = () =>{
                             return(
                                 <div key ={item.id} >
                                     <label>{item.description}
-                                    <input  type='checkbox' name={`claimed`} checked={item.claimed} onChange={handleAttendChange} />
+                                    <input  type='checkbox' name={"claimed"} checked={item.claimed} onChange={()=>{handleItemChange(item)}} />
                                     </label>
                                 </div>
                             )
