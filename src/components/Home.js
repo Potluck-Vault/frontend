@@ -22,18 +22,6 @@ const Home = () => {
         guests: []
     });
 
-    const editPotluck = (potluck) => {
-        push("/editpotluck");
-
-        console.log("editPotluck potluck obj: ", potluck);
-        return(
-
-        <AddPotluck setPotluck={setPotluck} 
-                    potluck={potluck} 
-                    potlucks={potlucks}  
-                    setPotlucks={setPotlucks} />
-    )};
-
    useEffect(()=>{
         axios.get('https://potluckvaultv2.herokuapp.com/api/potlucks')
           .then(res => { 
@@ -47,6 +35,8 @@ const Home = () => {
     return (
         <div>
             <h1>My Potlucks</h1>
+            <Link to={`/addpotluck`}><input type="button" value="Add a New Potluck"/></Link>
+
             {potlucks.map(potluck => {
             return (
             <div className="potluck-card">
