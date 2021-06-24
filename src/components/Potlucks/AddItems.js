@@ -4,13 +4,13 @@ import {v4 as uuidv4} from 'uuid';
 
 const AddItems = (props) => {
     const { items, setItems, potluck, setPotluck } = props;
-    const [newItem, setNewItem] = useState({id: uuidv4(), item: "", claimed: false, claimedBy: ""});
+    const [newItem, setNewItem] = useState({id: uuidv4(), item: "", claimed: false, claimedBy: null});
 
     const handleItemSubmit = (e) => {
         e.preventDefault();
         setItems([...items, {id: newItem.id, item: newItem.item, claimed: false, claimedBy: newItem.claimedBy}]);
         updatePotluck(items);
-        setNewItem({id: uuidv4(), item: "", claimed: false, claimedBy: ""});
+        setNewItem({id: uuidv4(), item: "", claimed: false, claimedBy: null});
     };
 
     const updatePotluck = (items) => {

@@ -29,7 +29,6 @@ const AddPotluck = (props) => {
 
 
 	const handleChange = (e) => {
-		console.log("Handle change: ", e.target.name, e.target.value);
 		setPotluck({
 			...potluck,
 			[e.target.name]: e.target.value
@@ -42,9 +41,9 @@ const AddPotluck = (props) => {
 			newGuests.push(newGuest);
 		})
 		console.log("newGuests: ", newGuests)
-		setGuests(newGuests);
+		// setGuests(newGuests);
 		console.log("guests after setGuests: ", guests)
-		setPotluck({...potluck, guests: newGuests})
+		// setPotluck({...potluck, guests: newGuests})
 		console.log("potluck after setPotluck: ", potluck);
 	}
 	const removeIdFromItems = items => {
@@ -54,20 +53,20 @@ const AddPotluck = (props) => {
 			newItems.push(newItem);
 		})
 		console.log("newItems: ", newItems)
-		setItems(newItems);
-		setPotluck({...potluck, items: newItems});
+		// setItems(newItems);
+		// setPotluck({...potluck, items: newItems});
 	}
     const handleSubmit = (e) => {
 		e.preventDefault();
-		removeIdFromGuests(potluck.guests);
-		removeIdFromItems(potluck.items);
-		setPotluck({...potluck, items: items, guests: guests});
+		removeIdFromGuests(guests);
+		removeIdFromItems(items);
+		 setPotluck({...potluck, items: items, guests: guests});
         axios.post(`https://potluckvaultv2.herokuapp.com/api/potlucks/`, potluck)
-          .then(res => { console.log("res for potluck id api: ", res)
+          .then(res => { console.log("res for potluck post api: ", res)
             setPotluck(res.data);
 			setGuests(res.data.guests);
 			setItems(res.data.items);
-
+			push("/");
           })
           .catch(err => {
             console.log("Error from API: ", err);
@@ -76,6 +75,8 @@ const AddPotluck = (props) => {
 
         // setPotlucks([...potlucks, potluck ])
         console.log("potluck to post: ", potluck);
+		push("/");
+ 
 	}
 
 	const { name, date, time, location, description } = potluck;

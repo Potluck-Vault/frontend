@@ -27,6 +27,16 @@ const Home = () => {
     const getItemGuest = (id) => {
         return potluck.guests.filter(guest => guest.id == id);
     }
+    const deletePotluck = e => {
+        axios.delete(`https://potluckvaultv2.herokuapp.com/api/potlucks/${e.target.name}`)
+          .then(res => { console.log("delete api server response: ", res);
+            // setPotlucks(res.data);
+            push("/");
+          })
+          .catch(err => {
+            console.log(err);
+          }); 
+    }
 
    useEffect(()=>{
         axios.get('https://potluckvaultv2.herokuapp.com/api/potlucks')
@@ -46,7 +56,7 @@ const Home = () => {
             {potlucks.map(potluck => {
             return (
             <div className="potluck-card">
-                <h2>{potluck.name}</h2>
+                <h2>{potluck.name}</h2><button onClick={deletePotluck} name={potluck.id}>Delete this Potluck</button>
 
                 <Link to={`/editpotluck/${potluck.id}`}>Edit</Link>
 
