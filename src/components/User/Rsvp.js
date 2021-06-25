@@ -1,9 +1,11 @@
-import React,{useState} from 'react';
-import { useHistory } from 'react-router-dom';
+
+import React,{useEffect, useState} from 'react';
+import { useHistory,useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
+import axios from 'axios';
 
 const dummyData = {
-                    title:'Potluck Chow Down',
+                    name:'Potluck Chow Down',
                     date: '06-21-2012',
                     time: '21:00',
                     location: 'earth',
@@ -32,13 +34,19 @@ const dummyData = {
                             {description:"Dish Number 4th",
                             claimed: false,
                             claimedBy: "",
-                            id:"925091ab-2aa4-40bd-a45e-8274ab20488b"}]
+                            id:"925091ab-2aa4-40bd-a45e-8274ab20488b"},
+                            {description:"A Dish Number ",
+                            claimed: false,
+                            claimedBy: "",
+                            id:"925091ab-2aa5-40bd-a45e-8274ab20488b"}]
 }
+
+
 const initialFormValue = {
-    name:'',
-    email:'',
+    guest:'',
+    contact:'',
     rsvp:null,
-    id: v4()
+    id:null
 } 
 
 const stringToBool= value =>{
@@ -53,11 +61,28 @@ const Rsvp = () =>{
     const [data,setData] = useState(dummyData)
     const [formValue,setFormValue] = useState(initialFormValue)
     const [isComing,setIsComing] = useState(false)
-    const {push} = useHistory()
+    const {push} = useHistory();
+    const { id } = useParams()
     // const [tempItems, setTempItems] = useState([]);
 
     //Use Effect to get data from the DB
+        useEffect(()=>{
+            axios.get(`https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`)
+            .then(res=>{
+                setData(res.data)
+                console.log("Axios call",res.data)
+            })
 
+            data.items.sort((a,b)=>(a.item > b.item)?1:-1)
+        },[])
+
+
+
+
+    // useEffect(()=>{
+    //     data.items.sort((a,b)=>(a.item > b.item)?1:-1)
+    // },[data.items])
+    
     const handleOnChange = (e) =>{
         if(e.target.type !== 'radio'){
             setFormValue({...formValue,[e.target.name]:e.target.value})
@@ -74,12 +99,16 @@ const Rsvp = () =>{
 
     const handleItemChange = (updateItem) => {
         // Create newItem (copy of changed item) with checkbox = !checkbox
-        const newItem = {id: updateItem.id, description: updateItem.description, claimed: !updateItem.claimed, claimedBy:updateItem.claimedBy};
+        const newItem = {id: updateItem.id, item: updateItem.item, claimed: !updateItem.claimed, claimedBy: !updateItem.claimed ? findByEmail(formValue.contact):""};
+        
         // Remove old item from tempItems
         let tempItems = data.items.filter(item => item.id !== updateItem.id);
         // Add newItem to tempItems
         tempItems.push(newItem);
         // replace data.items completely with tempItems
+        //Sorting new itemList
+        tempItems.sort((a,b)=>(a.item > b.item)?1:-1)
+        console.log(tempItems)
         setData({...data, items: tempItems});
     }
 
@@ -88,39 +117,53 @@ const Rsvp = () =>{
         // console.log(formValue)
         //axios call
 
+        console.log(findByEmail(formValue.contact))
+
+
+
         if(formValue.rsvp=== true){
             setIsComing(true)
+            setData({...data,})
         }
     }
     const onSubmit =(e) =>{ //Test
         e.preventDefault();
-        const newPerson = {
-            name:formValue.name,
-            email:formValue.email,
-            attending:formValue.attending,
-        }  
-        console.log(newPerson,data)
+        axios.put()
+          
+        console.log(data)
     } 
+    //Helper function
+    const findByEmail= (email) =>{
+         const currentGuest = data.guests.filter(guest => email.toLowerCase().trim() === guest.contact)
+         if(currentGuest.length>0){
+             return currentGuest[0];
+
+         }else{
+             //Set Error here
+             alert('Email is not here! are you sure you are invited!!')
+         }
+         
+    }
 
     return(
         <div>
            {isComing === false&&<div>
-            <h2>Are you attending {data.title}?</h2>
+            <h2>Are you attending {data.name}?</h2>
                 <form onSubmit={handleSubmit}>
                     <label>Name:
-                        <input type='text' name='name' value={formValue.name} onChange={handleOnChange}/>
+                        <input type='text' name='guest' value={formValue.guest} onChange={handleOnChange}/>
                         </label>   
                     <label>Email:
-                        <input type='text' name='email' value={formValue.email} onChange={handleOnChange}/>
+                        <input type='text' name='contact' value={formValue.contact} onChange={handleOnChange}/>
                         </label>   
                     <label>Attending:
                         <label>
-                            Yes
                             <input type ='radio' name ='rsvp' value = 'true' checked = {formValue.rsvp === true} onChange={handleOnChange} />
+                             -Yes
                         </label>
                         <label>
-                            No
                             <input type ='radio' name ='rsvp' value = 'false'  checked = {formValue.rsvp === false}  onChange={handleOnChange} />
+                            -No
                         </label>
                     </label> 
                     <button>Submit</button>              
@@ -128,7 +171,7 @@ const Rsvp = () =>{
             </div>}
             {isComing&&<div>
                 <div>
-                    <h2>What can you bring to {formValue.name}</h2>    
+                    <h2>What can you bring to {data.name}?</h2>    
                     <form>
                                 {/* <div>
                                     <label>{data.items[0].description}
@@ -138,7 +181,7 @@ const Rsvp = () =>{
                         {data.items.map((item,ind)=>{
                             return(
                                 <div key ={item.id} >
-                                    <label>{item.description}
+                                    <label>{item.item}
                                     <input  type='checkbox' name={"claimed"} checked={item.claimed} onChange={()=>{handleItemChange(item)}} />
                                     </label>
                                 </div>

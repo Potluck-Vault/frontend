@@ -42,7 +42,7 @@ const Home = () => {
           
       }, []);
     return (
-        <div>
+        <div className='potluck-container'>
             <h1>My Potlucks</h1>
             <Link to={`/addpotluck`}><input type="button" value="Add a New Potluck"/></Link>
 
