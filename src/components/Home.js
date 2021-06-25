@@ -8,16 +8,16 @@ const Home = () => {
     const [potlucks, setPotlucks] = useState([])
  
     const [potluck, setPotluck] = useState({
-        id: uuidv4(),
-        user_id: "",
-        username: "",
-        name:"",
-        date: "",
-        time: "",
-        location: "",
-        description: "",
-        items: [],
-        guests: []
+        // id: 0,
+        // user_id: "",
+        // username: "",
+        // name:"",
+        // date: "",
+        // time: "",
+        // location: "",
+        // description: "",
+        // items: [],
+        // guests: []
     });
 
     const deletePotluck = e => {
@@ -42,7 +42,7 @@ const Home = () => {
           
       }, []);
     return (
-        <div className='potluck-container'>
+        <div>
             <h1>My Potlucks</h1>
             <Link to={`/addpotluck`}><input type="button" value="Add a New Potluck"/></Link>
 
@@ -50,7 +50,11 @@ const Home = () => {
 
                 const getItemGuest = (id) => {
                     let itemGuest = potluck.guests.filter(guest => guest.id === id);
-                    return(itemGuest)
+                    if (itemGuest.length>0) {
+                        return(itemGuest[0]);
+                    }else{
+                        return {guest: "Nobody yet"};
+                    };
                 }
 
             return (
@@ -70,8 +74,7 @@ const Home = () => {
                         return(
                             <div key={item.id}>
                                 <p>{item.item}</p> 
-                                {getItemGuest(item.claimedBy).length >0 &&
-                                <p>Brought by: {getItemGuest(item.claimedBy)[0].guest}</p>}
+                                <p>Brought by: {getItemGuest(item.claimedBy).guest}</p>
                             </div>
                     )})}
                     <h3>Guests</h3>

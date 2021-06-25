@@ -52,7 +52,7 @@ const EditPotluck = (props) => {
     const handleSubmit = (e) => {
 		e.preventDefault();
 		axios.put((`https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`), potluck)
-		.then(res=> {console.log("Response from put: ", res);
+		.then(res=> {
 		})
 		.catch(err=> {
 		  console.log(err);
@@ -93,7 +93,8 @@ const EditPotluck = (props) => {
 					<AddItems items={items} 
                         setItems={setItems} 
                         potluck={potluck} 
-                        setPotluck={setPotluck} />
+                        setPotluck={setPotluck}
+						guests={guests} />
                     <InviteGuests guests={guests} 
                         setGuests={setGuests} 
                         potluck={potluck} 
