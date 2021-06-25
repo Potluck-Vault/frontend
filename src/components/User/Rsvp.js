@@ -1,5 +1,6 @@
+import axios from 'axios';
 import React,{useState} from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
 
 const dummyData = {
@@ -54,6 +55,7 @@ const Rsvp = () =>{
     const [formValue,setFormValue] = useState(initialFormValue)
     const [isComing,setIsComing] = useState(false)
     const {push} = useHistory()
+    const {id} = useParams()
     // const [tempItems, setTempItems] = useState([]);
 
     //Use Effect to get data from the DB
@@ -94,12 +96,14 @@ const Rsvp = () =>{
     }
     const onSubmit =(e) =>{ //Test
         e.preventDefault();
-        const newPerson = {
-            name:formValue.name,
-            email:formValue.email,
-            attending:formValue.attending,
-        }  
-        console.log(newPerson,data)
+        axios.put(`https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`, data)
+		.then(res=> {console.log("Response from put: ", res);
+		})
+		.catch(err=> {
+		  console.log(err);
+		})
+		push("/");
+        
     } 
 
     return(
@@ -129,7 +133,7 @@ const Rsvp = () =>{
             {isComing&&<div>
                 <div>
                     <h2>What can you bring to {formValue.name}</h2>    
-                    <form>
+                    <form onSubmit={onSubmit}>
                                 {/* <div>
                                     <label>{data.items[0].description}
                                     <input  type='checkbox' name='claimed' checked={data.claimed} onChange={handleAttendChange} />

@@ -56,7 +56,7 @@ const Home = () => {
             return (
             <div key={potluck.id} className="potluck-card">
                 <h2>{potluck.name}</h2><button onClick={deletePotluck} name={potluck.id}>Delete this Potluck</button>
-                <h4>URL for RSVP: <a href={`https://potluckvaultv2.herokuapp.com/potlucks/rsvp/${potluck.id}`}>https://potluckvaultv2.herokuapp.com/potlucks/rsvp/{potluck.id}</a></h4>
+                <h4>URL for RSVP: <a href={`http://localhost:3000/potlucks/rsvp/${potluck.id}`}>http://localhost:3000/potlucks/rsvp/{potluck.id}</a></h4>
 
                 <Link to={`/editpotluck/${potluck.id}`}>Edit</Link>
 
