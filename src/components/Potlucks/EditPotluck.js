@@ -93,7 +93,8 @@ const EditPotluck = (props) => {
 					<AddItems items={items} 
                         setItems={setItems} 
                         potluck={potluck} 
-                        setPotluck={setPotluck} />
+                        setPotluck={setPotluck}
+						guests={guests} />
                     <InviteGuests guests={guests} 
                         setGuests={setGuests} 
                         potluck={potluck} 
