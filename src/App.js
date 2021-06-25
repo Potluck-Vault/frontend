@@ -35,7 +35,7 @@ function App() {
     <Router>
       <Switch>
         <Route path='/register'  component={Register}/>
-        <Route path='/rsvp'  component={Rsvp}/>
+        <Route path='/potluck/rsvp/:id'  component={Rsvp}/>
         <Route path='/login'  component={Login}/>
         <Route exact path='/'  component={Home}/>
         {/* <Route exact path='/'
