@@ -1,17 +1,14 @@
 //Add a form that creates a new potluck and posts it to a backend endpoint
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import {v4 as uuidv4} from 'uuid';
 import AddItems from './AddItems';
 import InviteGuests from './InviteGuests';
 
 import axios from 'axios';
 
 const AddPotluck = (props) => {
-	// console.log("AddPotluck props.potluck: ", props.potluck);
 
 	const { push } = useHistory();
-	// const { setPotlucks, potlucks, potluck, setPotluck, items, setItems, guests, setGuests } = props; //Coming in from Home page
 	const [items, setItems] = useState([]);
 	const [guests, setGuests] = useState([]);
 	const [potluck, setPotluck] = useState({
@@ -26,10 +23,7 @@ const AddPotluck = (props) => {
 		items: items,
 		guests: guests });
 
-
-
 	const handleChange = (e) => {
-		console.log("Handle change: ", e.target.name, e.target.value);
 		setPotluck({
 			...potluck,
 			[e.target.name]: e.target.value
@@ -41,11 +35,7 @@ const AddPotluck = (props) => {
 			let newGuest = {guest: guest.guest, contact: guest.contact, rsvp: guest.rsvp};
 			newGuests.push(newGuest);
 		})
-		console.log("newGuests: ", newGuests)
 		setGuests(newGuests);
-		console.log("guests after setGuests: ", guests)
-		setPotluck({...potluck, guests: newGuests})
-		console.log("potluck after setPotluck: ", potluck);
 	}
 	const removeIdFromItems = items => {
 		let newItems = [];
@@ -53,29 +43,25 @@ const AddPotluck = (props) => {
 			let newItem = {item: item.item, claimed: item.claimed, claimedBy: item.claimedBy};
 			newItems.push(newItem);
 		})
-		console.log("newItems: ", newItems)
 		setItems(newItems);
-		setPotluck({...potluck, items: newItems});
 	}
+
     const handleSubmit = (e) => {
 		e.preventDefault();
-		removeIdFromGuests(potluck.guests);
-		removeIdFromItems(potluck.items);
-		setPotluck({...potluck, items: items, guests: guests});
+		removeIdFromGuests(guests);
+		removeIdFromItems(items);
+		setPotluck({...potluck, items: items});
+		setPotluck({...potluck, guests: guests});
         axios.post(`https://potluckvaultv2.herokuapp.com/api/potlucks/`, potluck)
-          .then(res => { console.log("res for potluck id api: ", res)
+          .then(res => { console.log("res for potluck post api: ", res)
             setPotluck(res.data);
 			setGuests(res.data.guests);
 			setItems(res.data.items);
-
+			push("/");
           })
           .catch(err => {
             console.log("Error from API: ", err);
           });
-		// Keep state in synch with database 
-
-        // setPotlucks([...potlucks, potluck ])
-        console.log("potluck to post: ", potluck);
 	}
 
 	const { name, date, time, location, description } = potluck;
