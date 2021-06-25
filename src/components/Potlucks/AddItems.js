@@ -32,12 +32,18 @@ const AddItems = (props) => {
         setNewItem({id: updateItem.id, item: updateItem.item, claimed: updateItem.claimed, claimedBy:updateItem.claimedBy});
         setItems(items.filter(item => item.id !== updateItem.id));
     }
-
+	const getItemGuest = (id) => {
+		console.log("potluck.guests:", potluck.guests );
+		let itemGuest = potluck.guests.filter(guest => guest.id === id);
+		return(itemGuest)
+	}
 
     return (
     <div>
         <h4>Menu Items</h4>
-            {items.map(item => <p>{item.item} <button type="button" name={item.id} onClick={deleteItem}>X</button><button type="button" name={item.id} onClick={()=>{editItem(item)}}>Edit</button> </p>)}
+            {items.map(item => <p>{item.item} <button type="button" name={item.id} onClick={deleteItem}>X</button><button type="button" name={item.id} onClick={()=>{editItem(item)}}>Edit</button></p>
+            )}
+        
         <h4>Add an Item</h4>
             <div>
                 <label htmlFor="item">Description: </label>
