@@ -7,7 +7,6 @@ import InviteGuests from './InviteGuests';
 import axios from 'axios';
 
 const EditPotluck = (props) => {
-	// console.log("AddPotluck props.potluck: ", props.potluck);
 
 	const { push } = useHistory();
 
@@ -42,30 +41,28 @@ const EditPotluck = (props) => {
           });
           
       }, [id]);
-		const handleChange = (e) => {
-			console.log("Handle change: ", e.target.name, e.target.value);
-			setPotluck({
-				...potluck,
-				[e.target.name]: e.target.value
-			});
-    	}
+
+	const handleChange = (e) => {
+		setPotluck({
+			...potluck,
+			[e.target.name]: e.target.value
+		});
+	}
 
     const handleSubmit = (e) => {
 		e.preventDefault();
 		axios.put((`https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`), potluck)
 		.then(res=> {console.log("Response from put: ", res);
-            // setPotlucks(res.data);
 		})
 		.catch(err=> {
 		  console.log(err);
 		})
-		console.log("AddPotluck submit: ", potluck);	
-        // setPotlucks([...potlucks, potluck ])
+		setPotluck(potluck);
+		push("/");
 	}
 
 	const { name, date, time, location, description } = potluck;
-	console.log("Potluck: ", potluck);
-    return (
+   	return (
 	<div className="col">
 		<div className="modal-content">
 			<form onSubmit={handleSubmit}>

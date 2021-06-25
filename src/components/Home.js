@@ -3,14 +3,10 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
 
-import AddPotluck from "./Potlucks/AddPotluck"
-
 const Home = () => {
-    const { push } = useHistory();
+    const history  = useHistory();
     const [potlucks, setPotlucks] = useState([])
-    // const [items, setItems] = useState([]);
-    // const [guests, setGuests] = useState([]);
-  
+ 
     const [potluck, setPotluck] = useState({
         id: uuidv4(),
         user_id: "",
@@ -24,8 +20,15 @@ const Home = () => {
         guests: []
     });
 
-    const getItemGuest = (id) => {
-        return potluck.guests.filter(guest => guest.id == id);
+    const deletePotluck = e => {
+        axios.delete(`https://potluckvaultv2.herokuapp.com/api/potlucks/${e.target.name}`)
+          .then(res => { console.log("delete api server response: ", res);
+            // setPotlucks(res.data);
+            history.go(0)
+          })
+          .catch(err => {
+            console.log(err);
+          }); 
     }
 
    useEffect(()=>{
@@ -44,9 +47,16 @@ const Home = () => {
             <Link to={`/addpotluck`}><input type="button" value="Add a New Potluck"/></Link>
 
             {potlucks.map(potluck => {
+
+                const getItemGuest = (id) => {
+                    let itemGuest = potluck.guests.filter(guest => guest.id === id);
+                    return(itemGuest)
+                }
+
             return (
-            <div className="potluck-card">
-                <h2>{potluck.name}</h2>
+            <div key={potluck.id} className="potluck-card">
+                <h2>{potluck.name}</h2><button onClick={deletePotluck} name={potluck.id}>Delete this Potluck</button>
+                <h4>URL for RSVP: <a href={`https://potluckvaultv2.herokuapp.com/potlucks/rsvp/${potluck.id}`}>https://potluckvaultv2.herokuapp.com/potlucks/rsvp/{potluck.id}</a></h4>
 
                 <Link to={`/editpotluck/${potluck.id}`}>Edit</Link>
 
@@ -58,18 +68,16 @@ const Home = () => {
                     <h3>Menu Items</h3>
                     {potluck.items.map(item => {
                         return(
-                            <div>
+                            <div key={item.id}>
                                 <p>{item.item}</p> 
-                                <p>Claimed?: {item.claimed}</p>
-                                <p>ClaimedBy: {item.claimedBy}</p>
-                                {/* <p>By: {getItemGuest(item.claimedBy)[0].guest}</p> */}
+                                {getItemGuest(item.claimedBy).length >0 &&
+                                <p>Brought by: {getItemGuest(item.claimedBy)[0].guest}</p>}
                             </div>
                     )})}
                     <h3>Guests</h3>
                     {potluck.guests.map(guest => {
                         return(
-                            <div className="guest">
-                                <p>{guest.id}</p> 
+                            <div key={guest.id} className="guest">
                                 <p>{guest.guest}</p>
                                 <p>{guest.contact}</p>
                             </div>
@@ -79,7 +87,6 @@ const Home = () => {
             </div>)}
             )}
         </div>
-
     )
 }
 
