@@ -8,10 +8,13 @@ const AddItems = (props) => {
 
     const handleItemSubmit = (e) => {
         e.preventDefault();
-        newItem.claimedBy>0 ? newItem.claimed=true : newItem.claimed=false;
+        if (newItem.claimedBy) {
+            setNewItem({...newItem, claimedBy: parseInt(newItem.claimedBy, 10), claimed: true})
+        };
+        // setNewItem({...newItem, claimedBy: parseInt(newItem.claimedBy, 10), claimed: true})
         setItems([...items, newItem]);
         updatePotluck(items);
-        console.log("newItem just added to items: ", newItem);
+        console.log("items just added to potluck: ", items);
 
         setNewItem({id: uuidv4(), item: "", claimed: false, claimedBy: 0});
     };
@@ -76,7 +79,7 @@ const AddItems = (props) => {
                 <select value={parseInt(getItemGuest(newItem.claimedBy).id, 10)}name="claimedBy" onChange={handleNewItemChange}>
                     <option value="0">Nobody Yet</option>
                     {potluck.guests.map(guest =>
-                        <option value={guest.id} name="claimedBy">{guest.guest}</option>
+                        <option value={parseInt(guest.id, 10)} name="claimedBy">{guest.guest}</option>
                     )}
                     {console.log("newItem in select: ", newItem)}
                 </select>
