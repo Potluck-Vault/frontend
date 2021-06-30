@@ -60,7 +60,7 @@ const AddPotluck = (props) => {
 			push("/");
           })
           .catch(err => {
-            "Error from API: ", err);
+            console.log("Error from API: ", err);
           });
 	}
 
