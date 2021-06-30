@@ -84,7 +84,7 @@ const AddItems = (props) => {
                     <option value={0} name="claimedBy">Nobody Yet</option>
                     {/* <option value={parseInt(newItem.claimedBy, 10)} name="claimedBy"></option> */}
                     {potluck.guests.map(guest =>
-                        <option value={parseInt(guest.id, 10)} name="claimedBy">{guest.guest}</option>
+                        <option key={parseInt(guest.id, 10)} value={parseInt(guest.id, 10)} name="claimedBy">{guest.guest}</option>
                     )}
                 </select>
             </div>

@@ -37,7 +37,7 @@ const InviteGuests = (props) => {
     <div>
         <h4>Guests</h4>
             {guests.map(guest => 
-            <div>
+            <div key={guest.id}>
                 <p>{`${guest.guest}, ${guest.contact}`} <button type="button" name={guest.id} onClick={deleteGuest}>X</button><button type="button" name={guest.guest} onClick={()=>{editGuest(guest)}}>Edit</button></p>
                 
             </div>
