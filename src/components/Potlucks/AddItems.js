@@ -1,17 +1,15 @@
 import React, {useState} from 'react';
-// import {v4 as uuidv4} from 'uuid';
-
 
 const AddItems = (props) => {
     const { items, setItems, potluck, setPotluck } = props;
-    const [newItem, setNewItem] = useState({id: 0, item: "", claimed: false, claimedBy: 0});
+    const [newItem, setNewItem] = useState({id: parseInt((Math.random()*10000000),10), item: "", claimed: false, claimedBy: 0});
 
     const handleItemSubmit = (e) => {
         e.preventDefault();
         setItems([...items, newItem]);
         updatePotluck(items);
 
-        setNewItem({id: 0, item: "", claimed: false, claimedBy: 0});
+        setNewItem({id: parseInt((Math.random()*10000000),10), item: "", claimed: false, claimedBy: 0});
     };
 
     const updatePotluck = (items) => { //adds a newItem object to an items array in potluck object
@@ -23,24 +21,18 @@ const AddItems = (props) => {
             ...newItem,
             [e.target.name]: ((e.target.name === "claimedBy") ? parseInt(e.target.value, 10) : e.target.value)
         })
-        console.log("handleNewItemChange: ", newItem);
-
     };
     // Trying to figure out how to update a react state item (object in an array) in jsx
     // This function is called from the onChange of a JSX select input where updateItem is one item in a .map of items array
-    const updateClaimedByFromJsx = (e) => { 
-        const objIndex = items.findIndex((item => item.id === e.target.name));
-        setItems([...items, items[objIndex].claimedBy = e.target.name])//without the event object, how do you know what has changed?
-    }
+    // const updateClaimedByFromJsx = (e) => { 
+    //     const objIndex = items.findIndex((item => item.id === e.target.name));
+    //     setItems([...items, items[objIndex].claimedBy = e.target.name])//without the event object, how do you know what has changed?
+    // }
     
     const deleteItem = (e) => {
-        console.log("deleteItem e.target.name: ", e.target.name)
-        console.log("deleteItem items: ", items)
- 
-        setItems(items.filter(item => item.id !== e.target.name));
-        console.log("deleteItem after setItems - items: ", items)
-
+        setItems(items.filter(item => item.id !== parseInt(e.target.name, 10)));
     }
+
     const editItem = (updateItem) => {
         setNewItem({...updateItem});
         setItems(items.filter(item => item.id !== updateItem.id));

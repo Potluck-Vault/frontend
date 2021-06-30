@@ -11,7 +11,7 @@ const Home = () => {
 
     const deletePotluck = e => {
         axios.delete(`https://potluckvaultv2.herokuapp.com/api/potlucks/${e.target.name}`)
-          .then(res => { console.log("delete api server response: ", res);
+          .then(res => { 
             // setPotlucks(res.data);
             history.go(0)
           })
