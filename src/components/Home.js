@@ -1,28 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import {v4 as uuidv4} from 'uuid';
+// import {v4 as uuidv4} from 'uuid';
 
 const Home = () => {
     const history  = useHistory();
     const [potlucks, setPotlucks] = useState([])
  
-    const [potluck, setPotluck] = useState({
-        // id: 0,
-        // user_id: "",
-        // username: "",
-        // name:"",
-        // date: "",
-        // time: "",
-        // location: "",
-        // description: "",
-        // items: [],
-        // guests: []
-    });
+    // const [potluck, setPotluck] = useState({});
 
     const deletePotluck = e => {
         axios.delete(`https://potluckvaultv2.herokuapp.com/api/potlucks/${e.target.name}`)
-          .then(res => { console.log("delete api server response: ", res);
+          .then(res => { 
             // setPotlucks(res.data);
             history.go(0)
           })

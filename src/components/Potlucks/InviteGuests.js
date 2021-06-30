@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 
 const InviteGuests = (props) => {
     const { guests, setGuests, potluck, setPotluck } = props;
-    const [newGuest, setNewGuest] = useState({id: uuidv4(), name: "", email: "", rsvp: false});
+    const [newGuest, setNewGuest] = useState({id: parseInt((Math.random()*10000000),10), name: "", email: "", rsvp: false});
 
     const handleGuestSubmit = (e) => {
         e.preventDefault();
         setGuests([...guests, {id: newGuest.id, guest: newGuest.guest, contact: newGuest.contact, rsvp: newGuest.rsvp}]);
         updatePotluck(guests)
-        setNewGuest({id: uuidv4(), guest: "", contact: ""});
+        setNewGuest({id: parseInt((Math.random()*10000000),10), guest: "", contact: ""});
     };
 
     const updatePotluck = (guests) => {
@@ -25,7 +24,7 @@ const InviteGuests = (props) => {
     };
 
     const deleteGuest = (e) => {
-        setGuests(guests.filter(guest => guest.id !== e.target.name));
+        setGuests(guests.filter(guest => guest.id !== parseInt(e.target.name, 10)));
     }
 
     const editGuest = (updateGuest) => {
@@ -37,7 +36,7 @@ const InviteGuests = (props) => {
     <div>
         <h4>Guests</h4>
             {guests.map(guest => 
-            <div>
+            <div key={guest.id}>
                 <p>{`${guest.guest}, ${guest.contact}`} <button type="button" name={guest.id} onClick={deleteGuest}>X</button><button type="button" name={guest.guest} onClick={()=>{editGuest(guest)}}>Edit</button></p>
                 
             </div>
