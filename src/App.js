@@ -16,11 +16,7 @@ function App() {
     <Router>
       <Switch>
         <Route path='/register'  component={Register}/>
-<<<<<<< HEAD
           <Route path='/potlucks/rsvp/:id'  component={Rsvp}/>
-=======
-        <Route path='/potluck/rsvp/:id'  component={Rsvp}/>
->>>>>>> 0775b67482169cc74effa797465309ae6b50daa8
         <Route path='/login'  component={Login}/>
         <Route exact path='/'  component={Home}/>
         <Route path='/addpotluck'  component={AddPotluck}/>

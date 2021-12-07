@@ -79,9 +79,9 @@ const Rsvp = () =>{
 
 
 
-    // useEffect(()=>{
-    //     data.items.sort((a,b)=>(a.item > b.item)?1:-1)
-    // },[data.items])
+    useEffect(()=>{
+        data.items.sort((a,b)=>(a.item > b.item)?1:-1)
+    },[data.items])
     
     const handleOnChange = (e) =>{
         if(e.target.type !== 'radio'){
@@ -99,7 +99,7 @@ const Rsvp = () =>{
 
     const handleItemChange = (updateItem) => {
         // Create newItem (copy of changed item) with checkbox = !checkbox
-        const newItem = {id: updateItem.id, item: updateItem.item, claimed: !updateItem.claimed, claimedBy: !updateItem.claimed ? findByEmail(formValue.contact):""};
+        const newItem = {id: updateItem.id, item: updateItem.item, claimed: !updateItem.claimed, claimedBy: !updateItem.claimed ? findByEmail(formValue.contact).id:""};
         
         // Remove old item from tempItems
         let tempItems = data.items.filter(item => item.id !== updateItem.id);
@@ -128,8 +128,9 @@ const Rsvp = () =>{
     }
     const onSubmit =(e) =>{ //Test
         e.preventDefault();
+        console.log(data)
         axios.put(`https://potluckvaultv2.herokuapp.com/api/potlucks/${id}`, data)
-		.then(res=> {console.log("Response from put: ", res);
+		.then(res=> {console.log("Response from put: ", data);
 		})
 		.catch(err=> {
 		  console.log(err);

@@ -41,6 +41,6 @@ code {
   transform: skewY(4deg);
 }
 
-.potluck-card h2,h3,p {
+.potluck-card h2,h3,h4,p,a {
   transform: skewY(-4deg);
 }
